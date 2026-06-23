@@ -43,10 +43,10 @@
     
     <div style="margin: 8px 0;">
       <label style="font-size: 1.1em; margin-right: 20px;">
-        <input type="radio" name="scan_type" value="入庫" checked style="transform: scale(1.3); margin-right: 3px;"> 入庫
+        <input type="radio" name="scan_type" value="貸出" checked style="transform: scale(1.3); margin-right: 3px;"> 貸出
       </label>
       <label style="font-size: 1.1em;">
-        <input type="radio" name="scan_type" value="出庫" style="transform: scale(1.3); margin-right: 3px;"> 出庫
+        <input type="radio" name="scan_type" value="返却" style="transform: scale(1.3); margin-right: 3px;"> 返却
       </label>
     </div>
 
@@ -61,7 +61,7 @@
 
     <div class="input-group">
       <label for="location">現場名（持ち出し先）：</label>
-      <input type="text" id="location" placeholder="現場名を入力してください">
+      <input type="text" id="location" placeholder="現場名を入力（返却時は空欄でもOK）">
     </div>
 
     <p style="font-size: 0.9em;">商品のQRコードをカメラにかざしてください</p>
@@ -92,7 +92,7 @@
     let scannedText = ""; 
     let html5QrCode;
 
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbxij1hNUceODQ3URgPf-ion8xAe4Lw08aktf-AtFwrffe32t-8LswR28xDzBEoXwWaoQg/exec";
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbytqQ6ZJKgD4IS5x6BKXLJpp1KrUtI67I37Od3Jv47txeoz4W1hg1f7XgJGyjXftFs8dw/exec";
 
     function checkPassword() {
       const inputPassword = document.getElementById('password-input').value;
@@ -132,7 +132,7 @@
 
       const selectedType = document.querySelector('input[name="scan_type"]:checked').value;
       const selectedUser = document.getElementById('operator').value;
-      const inputLocation = document.getElementById('location').value; // 入力された現場名を取得
+      const inputLocation = document.getElementById('location').value; 
 
       fetch(GAS_URL, {
         method: "POST",
@@ -142,7 +142,7 @@
           itemId: scannedText,
           type: selectedType,
           user: selectedUser,
-          location: inputLocation // GASに現場名データを送信
+          location: inputLocation 
         })
       })
       .then(response => response.json())
@@ -171,7 +171,6 @@
       document.getElementById('status').innerText = "";
       document.getElementById('send-btn').disabled = false;
       
-      // 送信完了・撮り直し時に、現場名の入力欄を空にする
       document.getElementById('location').value = "";
       
       scannedText = "";

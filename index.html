@@ -53,9 +53,17 @@
     <div class="input-group">
       <label for="operator">作業者名：</label>
       <select id="operator">
-        <option value="担当者A">担当者A</option>
-        <option value="担当者B">担当者B</option>
-        <option value="担当者C">担当者C</option>
+        <option value="平硲">平硲</option>
+        <option value="加藤">加藤</option>
+        <option value="會田">會田</option>
+        <option value="阿部">阿部</option>
+        <option value="佐藤 健">佐藤 健</option>
+        <option value="土田">土田</option>
+        <option value="塩川">塩川</option>
+        <option value="飯塚">飯塚</option>
+        <option value="田中 健">田中 健</option>
+        <option value="工藤">工藤</option>
+        <option value="長谷川">長谷川</option>
       </select>
     </div>
 
@@ -87,12 +95,14 @@
   </div>
 
   <script>
-    const CORRECT_PASSWORD = "1234";
+    // パスワードを「2151」に変更
+    const CORRECT_PASSWORD = "2151";
     let isScanning = true;
     let scannedText = ""; 
     let html5QrCode;
 
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbx_HUujZ0AVLcdVQ5hIfZamosQDIhwMpICGQxTRyAnnQAcHhs4z2ZEVfSoLVawEeodhsw/exec";
+    // ★コピーした「ウェブアプリのURL」にここを書き換えてください
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbytqQ6ZJKgD4IS5x6BKXLJpp1KrUtI67I37Od3Jv47txeoz4W1hg1f7XgJGyjXftFs8dw/exec";
 
     function checkPassword() {
       const inputPassword = document.getElementById('password-input').value;
@@ -152,6 +162,12 @@
           document.getElementById('result-message').innerText = data.message;
           document.getElementById('after-send').style.display = 'block';
           document.getElementById('status').innerText = "";
+
+          // 送信成功から2秒（2000ミリ秒）後に自動で初期画面にリセット
+          setTimeout(function() {
+            resetScan();
+          }, 2000);
+
         } else {
           document.getElementById('status').innerText = "エラー: " + data.message;
           document.getElementById('send-btn').disabled = false;
